@@ -1,7 +1,8 @@
 .profile {
   display: grid;
   justify-items: center;
-  margin: 42px 0 36px;
+  margin: 42px auto 36px;
+  max-width: 360px;
 }
 
 @media screen and (min-width: 1024px) {
@@ -9,5 +10,6 @@
     grid-template-columns: repeat(2,max-content) 1fr;
     margin: 40px 0 50px;
     align-items: center;
+    max-width: 1280px;
   }
 }
