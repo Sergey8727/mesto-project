@@ -17,8 +17,10 @@
     <section class="profile">
       <img src="./image/image.jpg" alt="Аватар" class="profile__avatar">
       <div class="profile__info">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button type="button" class="profile__edit-button"></button>
+        <div class="profile__name-witn-button">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button type="button" class="profile__edit-button"></button>
+        </div>
         <p class="profile__description">Исследователь океана</p>
       </div>
       <button type="button" class="profile__add-button"></button>
@@ -26,48 +28,6 @@
 
     <section class="photo-grid">
       <ul class="photo-grid__list">
-        <li class="photo-grid__item">
-          <img src="./image/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск" class="photo-grid__image">
-          <div class="photo-grid__description">
-            <h2 class="photo-grid__title">Карачаевск</h2>
-            <button type="button" class="photo-grid__like"></button>
-          </div>
-        </li>
-        <li class="photo-grid__item">
-          <img src="./image/kirill-pershin-1404681-unsplash.png" alt="Эльбрус" class="photo-grid__image">
-          <div class="photo-grid__description">
-            <h2 class="photo-grid__title">Гора Эльбрус</h2>
-            <button type="button" class="photo-grid__like"></button>
-          </div>
-        </li>
-        <li class="photo-grid__item">
-          <img src="./image/kirill-pershin-1556355-unsplash.png" alt="Домбай" class="photo-grid__image">
-          <div class="photo-grid__description">
-            <h2 class="photo-grid__title">Домбай</h2>
-            <button type="button" class="photo-grid__like"></button>
-          </div>
-        </li>
-        <li class="photo-grid__item">
-          <img src="./image/kirill-pershin-1404681-unsplash.png" alt="Эльбрус" class="photo-grid__image">
-          <div class="photo-grid__description">
-            <h2 class="photo-grid__title">Гора Эльбрус</h2>
-            <button type="button" class="photo-grid__like"></button>
-          </div>
-        </li>
-        <li class="photo-grid__item">
-          <img src="./image/kirill-pershin-1556355-unsplash.png" alt="Домбай" class="photo-grid__image">
-          <div class="photo-grid__description">
-            <h2 class="photo-grid__title">Домбай</h2>
-            <button type="button" class="photo-grid__like"></button>
-          </div>
-        </li>
-        <li class="photo-grid__item">
-          <img src="./image/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкесия" class="photo-grid__image">
-          <div class="photo-grid__description">
-            <h2 class="photo-grid__title">Карачаево-Черкесия</h2>
-            <button type="button" class="photo-grid__like"></button>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
@@ -76,19 +36,50 @@
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
-  <section class="popup">
-    <form name="popup" class="popup__container">
+  <div class="popup popup__profile">
+    <form name="popup" id="edit_profile" class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
       <button title="Закрыть" type="button" class="popup__close-button"></button>
       <fieldset class="popup__fieldset">
-        <input type="text" name="name" class="popup__input" value="Жак-Ив Кусто">
-        <input type="text" name="description" class="popup__input" value="Исследователь океана">
+        <input type="text" name="name" id="name" class="popup__input" value="Жак-Ив Кусто">
+        <input type="text" name="description" id="description" class="popup__input" value="Исследователь океана">
         <button type="submit" class="popup__save-button">Сохранить</button>
       </fieldset>
     </form>
-  </section>
+  </div>
 
+  <div class="popup popup-grid">
+    <form name="popup" id="add_card" class="popup__container">
+      <h3 class="popup__title">Новое место</h3>
+      <button title="Закрыть" type="button" id="close_popupCard" class="popup__close-button"></button>
+      <fieldset class="popup__fieldset">
+        <input type="text" name="name" class="popup__input" placeholder="Название">
+        <input type="text" name="link" class="popup__input" placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__save-button">Создать</button>
+      </fieldset>
+    </form>
+  </div>
 
+  <div class="popup popup__background popup__img">
+    <div class="popup__img-container">
+      <button class="popup__button popup__button-close" type="button"></button>
+      <img class="popup__image">
+      <h2 class="popup__name"></h2>
+    </div>
+  </div>
+
+  <template class="photo-grid__template">
+    <li class="photo-grid__item">
+      <img src="" alt="" class="photo-grid__image">
+      <button type="button" class="photo-grid__delete-button"></button>
+      <div class="photo-grid__description">
+        <h2 class="photo-grid__title"></h2>
+        <button type="button" class="photo-grid__like"></button>
+      </div>
+    </li>
+  </template>
+
+  <script src="./script.js"></script>
 </body>
 
 </html>
