@@ -1,5 +1,5 @@
 # Проект: Место
 
 Адаптивная верстка
-Технилогии: html и css
-Ссылка: https://sergey8727.github.io/mesto-project/index.html 
+Технилогии: js, html и css
+Ссылка: https://sergey8727.github.io/mesto-project/index.html
