@@ -1,6 +1,7 @@
 .profile__info {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
   justify-content: center;
   margin: 26px auto 14px;
@@ -14,5 +15,6 @@
     margin: 0 0 16px 30px;
     max-width: 350px;
     justify-content: flex-start;
+    align-items: flex-start;
   }
 }
