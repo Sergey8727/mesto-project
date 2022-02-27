@@ -79,7 +79,6 @@ cardForm.addEventListener('submit', function (evt) {
   const item = [];
   item['name'] = cardName.value;
   item['link'] = cardLink.value;
-  console.log(item);
   addCard(cardsContainer, item);
   cardForm.reset();
   closePopup(popupGrid);
