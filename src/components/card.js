@@ -1,5 +1,5 @@
 import { openPopup } from './modal';
-import { cardTemplate, popupImg } from './index';
+import { cardTemplate, popupImg, imgPopup } from './index';
 
 export const initialCards = [
   {
@@ -47,8 +47,8 @@ export function createCard(item) {
   image.addEventListener('click', () => {
     openPopup(popupImg);
     popupImg.querySelector('.popup__name').textContent = item.name;
-    popupImg.querySelector('.popup__image').src = item.link;
-    popupImg.querySelector('.popup__image').alt = item.name;;
+    imgPopup.src = item.link;
+    imgPopup.alt = item.name;;
   });
 
   return cardElement;
