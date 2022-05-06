@@ -1,6 +1,6 @@
 import { openPopup } from './modal';
 import { cardTemplate, popupImg, imgPopup, } from './index';
-import { addLike, processRequest, deleteLike, deleteCard } from './api';
+import { addLike, deleteLike, deleteCard } from './api';
 
 
 export function setLikesCounter(likesCounter, likes) {
@@ -21,9 +21,8 @@ function getLikeState(evt, cardId, likes) {
 
 function setLike(evt, cardId, likes, likesCounter) {
   getLikeState(evt, cardId, likes)
-    .then(processRequest)
     .then(res => toggleLike(evt, likesCounter, res.likes))
-    .catch(err => {console.error(err)});
+    .catch(err => { console.error(err) });
 }
 
 export function createCard(item, userId) {
@@ -43,9 +42,8 @@ export function createCard(item, userId) {
 
   deleteButton.addEventListener('click', (evt) => {
     deleteCard(item._id)
-      .then(processRequest)
       .then(() => (evt.target.closest('.photo-grid__item').remove()))
-      .catch(err => {console.error(err)});
+      .catch(err => { console.error(err) });
   });
 
   if (item.likes.find(user => {

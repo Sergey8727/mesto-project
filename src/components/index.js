@@ -2,8 +2,8 @@ import '../pages/index.css';
 import { openPopup, closePopup } from './modal';
 import { enableValidation, settings } from './validate';
 import { createCard, } from './card';
-
-import { getUserData, getCards, loading, patchProfileData, processRequest, postCard, patchAvatar } from './api.js';
+import { loading, } from './utils';
+import { getUserData, getCards, patchProfileData, postCard, patchAvatar } from './api.js';
 
 const popupProfile = document.querySelector('.popup__profile');
 const titleProfile = document.querySelector('.profile__name');
@@ -43,12 +43,14 @@ formAvatar.addEventListener('submit', function (evt) {
   evt.preventDefault();
   loading(true, saveAvatar);
   patchAvatar(linkAvatar.value)
-    .then(processRequest)
     .then(res => {
       renderUserData(res);
       closePopup(popupAvatar);
+      saveAvatar.classList.add(settings.inactiveButtonClass);
+      saveAvatar.disabled = true;
+      formAvatar.reset();
     })
-    .catch(err => {console.error(err)})
+    .catch(err => { console.error(err) })
     .finally(() => loading(false, saveAvatar));
 });
 
@@ -67,12 +69,14 @@ cardForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
   loading(true, saveButton);
   postCard(imgCard.value, linkCard.value)
-    .then(processRequest)
     .then(card => {
       cardsContainer.prepend(createCard(card, user._id));
       closePopup(popupGrid);
+      saveButton.classList.add(settings.inactiveButtonClass);
+      saveButton.disabled = true;
+      cardForm.reset();
     })
-    .catch(err => {console.error(err)})
+    .catch(err => { console.error(err) })
     .finally(() => loading(false, saveButton));
 });
 
@@ -85,8 +89,6 @@ editButton.addEventListener('click', () => {
 formProfile.addEventListener('submit', handleSubmitProfileForm);
 
 addButton.addEventListener('click', () => {
-  saveButton.classList.add(settings.inactiveButtonClass);
-  saveButton.disabled = true;
   openPopup(popupGrid);
 });
 
@@ -99,7 +101,7 @@ Promise.all([getUserData(), getCards()])
       cardsContainer.append(createCard(card, profile._id));
     });
   })
-  .catch(err => {console.error(err)});
+  .catch(err => { console.error(err) });
 
 function renderUserData(data) {
   user = data;
@@ -112,12 +114,11 @@ function handleSubmitProfileForm(evt) {
   evt.preventDefault();
   loading(true, saveProfileButton);
   patchProfileData(nameProfile.value, descriptionProfile.value)
-    .then(processRequest)
     .then(res => {
       renderUserData(res);
       closePopup(popupProfile);
 
     })
-    .catch(err => {console.error(err)})
+    .catch(err => { console.error(err) })
     .finally(() => loading(false, saveProfileButton));
 }
