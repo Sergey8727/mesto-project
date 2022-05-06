@@ -1,48 +1,62 @@
 import { openPopup } from './modal';
-import { cardTemplate, popupImg, imgPopup } from './index';
+import { cardTemplate, popupImg, imgPopup, } from './index';
+import { addLike, processRequest, deleteLike, deleteCard } from './api';
 
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  },
-];
 
-export function createCard(item) {
+export function setLikesCounter(likesCounter, likes) {
+  likesCounter.textContent = likes.length;
+}
+
+function toggleLike(evt, likesCounter, likes) {
+  evt.target.classList.toggle('photo-grid__like_active');
+  setLikesCounter(likesCounter, likes)
+}
+
+function getLikeState(evt, cardId, likes) {
+  if (evt.target.classList.contains('photo-grid__like_active')) {
+    return deleteLike(cardId);
+  }
+  return addLike(cardId, likes);
+}
+
+function setLike(evt, cardId, likes, likesCounter) {
+  getLikeState(evt, cardId, likes)
+    .then(processRequest)
+    .then(res => toggleLike(evt, likesCounter, res.likes))
+    .catch(err => {console.error(err)});
+}
+
+export function createCard(item, userId) {
   const cardElement = cardTemplate.querySelector('.photo-grid__item').cloneNode(true);
   const image = cardElement.querySelector('.photo-grid__image');
+  const like = cardElement.querySelector('.photo-grid__like');
+  const likesCounter = cardElement.querySelector('.photo-grid__like-counter');
+  const deleteButton = cardElement.querySelector('.photo-grid__delete-button');
 
   cardElement.querySelector('.photo-grid__title').textContent = item.name;
   image.src = item.link;
   image.alt = item.name;
 
-  cardElement.querySelector('.photo-grid__delete-button').addEventListener('click', function (evt) {
-    evt.target.closest('.photo-grid__item').remove();
+  cardElement.querySelector('.photo-grid__like').addEventListener('click', function (evt) {
+    setLike(evt, item._id, item.likes, likesCounter);
   });
 
-  cardElement.querySelector('.photo-grid__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('photo-grid__like_active');
+  deleteButton.addEventListener('click', (evt) => {
+    deleteCard(item._id)
+      .then(processRequest)
+      .then(() => (evt.target.closest('.photo-grid__item').remove()))
+      .catch(err => {console.error(err)});
   });
+
+  if (item.likes.find(user => {
+    return user._id === userId
+  })) {
+    like.classList.add('photo-grid__like_active');
+  }
+  setLikesCounter(likesCounter, item.likes);
+  if (item.owner._id !== userId) {
+    deleteButton.remove();
+  }
 
   image.addEventListener('click', () => {
     openPopup(popupImg);
